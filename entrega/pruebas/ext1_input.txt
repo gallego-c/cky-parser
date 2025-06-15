@@ -8,6 +8,10 @@ B -> AX | b | a
 X -> a
 R -> XB
 a
+b
+aab
+aaa
+acb
  
 S -> ASB
 A -> aAS | a | epsilon 
