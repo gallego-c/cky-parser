@@ -2,7 +2,7 @@ S -> a | XA | AX | b | epsilon
 C -> ABF
 D -> aA
 E -> Bb
-F -> T
+F -> R 
 A -> RB
 B -> AX | b | a
 X -> a
