@@ -2,7 +2,7 @@
 
 # ---------------------------------------------------------------------------------------- #
 
-# Funciond de lectura de gramaticas
+# Funcion de lectura de gramaticas
 # Carga una gramatica desde un archivo y devuelve un diccionario con las reglas y palabras
 def cargar_gramatica(ruta_archivo):
     gramaticas={}
@@ -15,6 +15,23 @@ def cargar_gramatica(ruta_archivo):
             if linea:
                 linea = linea.strip()
 
+
+                if '->' in linea:
+                    l_iz, l_der = linea.split('->')
+                    l_iz = l_iz.strip()
+                    alternativas = l_der.split('|')
+
+                    for alt in alternativas:
+                        alt = alt.strip()
+                        if alt not in ['epsilon', 'ε']:
+                            produccion = alt.split() if ' ' in alt else list(alt)
+                            reglas.setdefault(l_iz, []).append(produccion)
+
+                            
+                if linea != "":
+                    palabras.append(linea)
+                        
+                        
                 #si hay \n es q hay nueva gramatica, y se guarda lo que hemos leido
                 if linea == "" or linea == " ":
                     if reglas and palabras:
@@ -25,24 +42,6 @@ def cargar_gramatica(ruta_archivo):
                         n += 1
                         reglas = {}
                         palabras = []
-
-                if '->' in linea:
-                    l_iz, l_der = linea.split('->')
-                    l_iz = l_iz.strip()
-                    alternativas = l_der.split('|')
-
-                    for alt in alternativas:
-                        alt = alt.strip()
-                        if alt in ['epsilon', 'ε']:
-                            produccion = ['epsilon']  # Representamos epsilon siempre como 'epsilon'
-                        else:
-                            produccion = alt.split() if ' ' in alt else list(alt)
-                            reglas.setdefault(l_iz, []).append(produccion)
-
-                            
-                else:
-                    if linea != "":
-                        palabras.append(linea)
             
 
     # Si input no acaba en /n añadir lo ultimo leido               
@@ -67,13 +66,13 @@ def es_cnf(gramatica):
     for reglas in gramatica.values():
         for produccion in reglas:
             for simbolo in produccion:
-                if simbolo == simbolo_inicial or simbolo == 'epsilon' :
+                if simbolo == simbolo_inicial:
                     return False
                 if simbolo not in no_terminales :
                     terminales.add(simbolo)
 
     # Ahora comprobamos si cada producción cumple las reglas de la CNF
-    for lado_izq, reglas in gramatica.items():
+    for _, reglas in gramatica.items():
         for produccion in reglas:
             
             if len(produccion) == 1:
@@ -124,6 +123,6 @@ def cky(gramatica, palabra):
                     for C in derecha:
                         if (B, C) in inversa:
                             tabla[i][j].update(inversa[(B, C)])
-    # print(tabla)
+    
     # Verificamos si el símbolo inicial S genera toda la cadena
     return 'S' in tabla[0][n - 1]

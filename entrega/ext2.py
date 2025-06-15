@@ -17,17 +17,6 @@ def cargar_gramatica2(ruta_archivo):
             if linea:
                 linea = linea.strip()
 
-                #si hay \n es q hay nueva gramatica, y se guarda lo que hemos leido
-                if linea == "" or linea == " ":
-                    if reglas and palabras:
-                        gramaticas[f"G{n}"] = {
-                            "reglas": reglas,
-                            "palabras": palabras
-                        }
-                        n += 1
-                        reglas = {}
-                        palabras = []
-
                 if '->' in linea:
                     l_iz, l_der = linea.split('->')
                     l_iz = l_iz.strip()
@@ -54,9 +43,19 @@ def cargar_gramatica2(ruta_archivo):
                             produccion = alt_sin_prob.split() if ' ' in alt_sin_prob else list(alt_sin_prob)
                         reglas.setdefault(l_iz, []).append((produccion, probabilidad))
            
-                else:
-                    if linea != "":
-                        palabras.append(linea)
+                if linea != "":
+                    palabras.append(linea)
+                        
+                #si hay \n es q hay nueva gramatica, y se guarda lo que hemos leido
+                if linea == "" or linea == " ":
+                    if reglas and palabras:
+                        gramaticas[f"G{n}"] = {
+                            "reglas": reglas,
+                            "palabras": palabras
+                        }
+                        n += 1
+                        reglas = {}
+                        palabras = []
             
 
     # Si input no acaba en /n añadir lo ultimo leido               

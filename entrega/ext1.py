@@ -75,7 +75,7 @@ def convertir_cnf(gramatica):
     # Paso 5: Separar terminales si hay más de uno en la producción
     reemplazos = {}
     for nt in list(nueva_gramatica):
-        for i, regla in enumerate(nueva_gramatica[nt]):
+        for _, regla in enumerate(nueva_gramatica[nt]):
             if len(regla) == 2:
                 for j in range(2):
                     simbolo = regla[j]
