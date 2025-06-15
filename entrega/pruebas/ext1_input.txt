@@ -17,3 +17,68 @@ S -> ASB
 A -> aAS | a | epsilon 
 B -> SbS | A | bb
 a
+
+S -> a
+S -> b
+a
+b
+ab
+ba
+c
+
+S -> A B C
+A -> a
+B -> b
+C -> c
+abc
+ab
+ac
+a
+abcd
+
+S -> A | epsilon
+A -> a
+a
+b
+ab
+
+S -> A B C D
+A -> a
+B -> b
+C -> c
+D -> d
+abcd
+ab
+abc
+a
+abcde
+
+S -> A b
+A -> a
+ab
+a
+b
+ba
+abc
+
+S -> A S | b
+A -> a
+b
+ab
+aab
+aaab
+ba
+
+S -> a | B C | D
+B -> b | a
+C -> a
+D -> b | epsilon
+a
+b
+ab
+aa
+ba
+aaa
+abc
+aab
+ac
