@@ -1,0 +1,47 @@
+S -> A B
+S -> B C
+A -> a
+B -> b
+C -> c
+ab
+bc
+ac
+abc
+ba
+
+S -> a
+S -> b
+a
+b
+ab
+c
+
+S -> A A
+A -> a
+aa
+a
+aaa
+b
+ab
+
+S -> A B
+A -> a
+B -> b
+B -> c
+ab
+ac
+a
+abc
+bc
+
+S -> X A
+S -> a
+A -> B C
+B -> b
+C -> c
+X -> a
+aa
+abc
+aabc
+ac
+a

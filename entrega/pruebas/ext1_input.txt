@@ -1,0 +1,15 @@
+S -> a | XA | AX | b | epsilon 
+C -> ABF
+D -> aA
+E -> Bb
+F -> T
+A -> RB
+B -> AX | b | a
+X -> a
+R -> XB
+a
+ 
+S -> ASB
+A -> aAS | a | epsilon 
+B -> SbS | A | bb
+a
