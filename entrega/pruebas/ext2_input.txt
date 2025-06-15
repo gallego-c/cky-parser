@@ -26,3 +26,17 @@ D -> BC [0.7] | d [0.3]
 ab
 bab
 bbbbbbb
+
+S -> AB [0.8] | BC [0.2]
+A -> a [0.5] | b [0.5]
+B -> AC [0.6] | b [0.4]
+C -> a [0.7] | b [0.3]
+ab
+aaab
+baba
+abbb
+aab
+c
+baab
+babb
+abc
