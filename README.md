@@ -1,7 +1,8 @@
 # CKY Parser & CNF Conversion — PAA
 
-![Python](https://img.shields.io/badge/Python-3-blue.svg)
-![Topic](https://img.shields.io/badge/Topic-Formal_Languages-orange.svg)
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue?logo=python&logoColor=white)
+![Topic](https://img.shields.io/badge/Topic-Formal_Languages_%26_Automata-orange)
+![Status](https://img.shields.io/badge/Status-Complete-brightgreen)
 ![Project](https://img.shields.io/badge/Project-Coursework-lightgrey.svg)
 
 A Python coursework project exploring the **Cocke–Kasami–Younger (CKY / CYK)** algorithm, **Chomsky normal form (CNF)** conversion, and **probabilistic context-free grammar (PCFG)** parsing.
