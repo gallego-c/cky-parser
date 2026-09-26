@@ -1,16 +1,17 @@
-# Funciones auxiliares para la extensión 1
+# Helper functions for extension 1
+
 # ---------------------------------------------------------------------------------------- #
 
-# Funcion que convierte una gramática a su forma normal de Chomsky (CNF)
+# Convert a grammar to Chomsky normal form (CNF)
 def convertir_cnf(gramatica):
 
     simbolo_inicial = list(gramatica.keys())[0]
 
-    # No terminales: claves del diccionario
+    # Nonterminals: dictionary keys
     no_terminales = set(gramatica.keys())
     terminales = set()
 
-    # Recorrer todas las reglas para encontrar terminales
+    # Scan all rules to identify terminals
     for reglas in gramatica.values():
         for produccion in reglas:
             for simbolo in produccion:
@@ -21,17 +22,17 @@ def convertir_cnf(gramatica):
     contador = 0
 
 
-    # Paso 1: Nuevo símbolo inicial si hace falta
+    # Step 1: Introduce a new start symbol if needed
     if any(simbolo_inicial in prod for reglas in gramatica.values() for prod in reglas):
         nueva_gramatica['S0'] = [[simbolo_inicial]]
         simbolo_inicial = 'S0'
 
-    # Copiar las reglas originales
+    # Copy the original rules
     for no_terminal, reglas in gramatica.items():
         nueva_gramatica[no_terminal] = reglas.copy()
 
 
-    # Paso 2: Eliminar epsilon
+    # Step 2: Eliminate epsilon productions
     vacios = set()
     for nt, reglas in nueva_gramatica.items():
         for regla in reglas:
@@ -50,7 +51,7 @@ def convertir_cnf(gramatica):
             nueva_gramatica[nt2].extend(nuevas)
 
 
-    # Paso 3: Eliminar producciones unitarias
+    # Step 3: Eliminate unit productions
     for nt in list(nueva_gramatica):
         nuevas = []
         for regla in nueva_gramatica[nt]:
@@ -59,7 +60,7 @@ def convertir_cnf(gramatica):
         nueva_gramatica[nt].extend(nuevas)  
 
 
-    # Paso 4: Dividir producciones largas
+    # Step 4: Split long productions
     for nt in list(nueva_gramatica):
         nuevas = []
         for regla in nueva_gramatica[nt]:
@@ -72,7 +73,7 @@ def convertir_cnf(gramatica):
         nueva_gramatica[nt] = nuevas
 
 
-    # Paso 5: Separar terminales si hay más de uno en la producción
+    # Step 5: Isolate terminals in productions containing multiple symbols
     reemplazos = {}
     for nt in list(nueva_gramatica):
         for _, regla in enumerate(nueva_gramatica[nt]):

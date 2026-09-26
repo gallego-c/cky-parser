@@ -1,9 +1,9 @@
-# Funciones auxiliares
+# Helper functions
 
 # ---------------------------------------------------------------------------------------- #
 
-# Funcion de lectura de gramaticas
-# Carga una gramatica desde un archivo y devuelve un diccionario con las reglas y palabras
+# Grammar loading function
+# Load a grammar from a file and return a dictionary of rules and words
 def cargar_gramatica(ruta_archivo):
     gramaticas={}
     reglas = {}
@@ -32,7 +32,7 @@ def cargar_gramatica(ruta_archivo):
                     palabras.append(linea)
                         
                         
-                #si hay \n es q hay nueva gramatica, y se guarda lo que hemos leido
+                # A blank line starts a new grammar block; save the data read so far
                 if linea == "" or linea == " ":
                     if reglas and palabras:
                         gramaticas[f"G{n}"] = {
@@ -44,7 +44,7 @@ def cargar_gramatica(ruta_archivo):
                         palabras = []
             
 
-    # Si input no acaba en /n añadir lo ultimo leido               
+    # Save the last block if the input does not end with a blank line
     if reglas and palabras:
         gramaticas[f"G{n}"] = {
             "reglas": reglas,
@@ -55,14 +55,14 @@ def cargar_gramatica(ruta_archivo):
 
 # ---------------------------------------------------------------------------------------- #
 
-# Función que comprueba si una gramática está en forma normal de Chomsky (CNF)
+# Check whether a grammar is in Chomsky normal form (CNF)
 def es_cnf(gramatica):
     simbolo_inicial = list(gramatica.keys())[0]
     no_terminales = set(gramatica.keys())
     terminales = set()
 
     
-    # Recorremos toda la gramática para ver qué símbolos podrían ser terminales
+    # Scan the grammar to identify possible terminal symbols
     for reglas in gramatica.values():
         for produccion in reglas:
             for simbolo in produccion:
@@ -71,22 +71,22 @@ def es_cnf(gramatica):
                 if simbolo not in no_terminales :
                     terminales.add(simbolo)
 
-    # Ahora comprobamos si cada producción cumple las reglas de la CNF
+    # Check whether each production satisfies the CNF rules
     for _, reglas in gramatica.items():
         for produccion in reglas:
             
             if len(produccion) == 1:
-                # Caso A -> a
+                # Case A -> a
                 if produccion[0] not in terminales:
                     return False
                     
             elif len(produccion) == 2:
-                # Caso A -> B C
+                # Case A -> B C
                 if produccion[0] in terminales or produccion[1] in terminales:
                     return False
                     
             else:
-                # Producción con más de 2 símbolos ej A-> BCD
+                # Production with more than two symbols, e.g. A -> BCD
                 return False
                 
     
@@ -95,25 +95,25 @@ def es_cnf(gramatica):
     
 # ---------------------------------------------------------------------------------------- #
 
-# Funcion que implementa el algoritmo CKY para verificar si una cadena pertenece a una gramática en CNF
+# Implement CKY to check whether a string belongs to a grammar in CNF
 def cky(gramatica, palabra):
     n = len(palabra)
     tabla = [[set() for _ in range(n)] for _ in range(n)]
 
-    # Crear un diccionario inverso: RHS -> LHS
+    # Build an inverse dictionary: RHS -> LHS
     inversa = {}
     for lhs, producciones in gramatica.items():
         for rhs in producciones:
             clave = tuple(rhs)
             inversa.setdefault(clave, []).append(lhs)
 
-    # Rellenar la diagonal (longitud 1): A -> a
+    # Fill the diagonal (length 1): A -> a
     for i, simbolo in enumerate(palabra):
         if (simbolo,) in inversa:
             tabla[i][i].update(inversa[(simbolo,)])
 
-    # Rellenar el resto de la tabla
-    for longitud in range(2, n + 1):  # tamaño del fragmento
+    # Fill the remaining table cells
+    for longitud in range(2, n + 1):  # Substring length
         for i in range(n - longitud + 1):
             j = i + longitud - 1
             for k in range(i, j):
@@ -124,5 +124,5 @@ def cky(gramatica, palabra):
                         if (B, C) in inversa:
                             tabla[i][j].update(inversa[(B, C)])
     
-    # Verificamos si el símbolo inicial S genera toda la cadena
+    # Check whether the start symbol S generates the entire string
     return 'S' in tabla[0][n - 1]

@@ -1,10 +1,14 @@
+from pathlib import Path
+
+DATA_DIR = Path(__file__).resolve().parents[1] / "data"
+
 from func import *
 from ext1 import *
 from ext2 import *
 
 
-# Base
-gramatica = cargar_gramatica('entrega/pruebas/cnf_input.txt')
+# Base implementation
+gramatica = cargar_gramatica(DATA_DIR / 'cnf_input.txt')
 
 for g in gramatica:
     print()
@@ -24,14 +28,14 @@ for g in gramatica:
         print(f" Pertenece la palabra {palabra} a la gramatica {g}: {cky(gramatica[g]['reglas'], palabra)}")
 
 
-# Ext1
+# Extension 1: CNF conversion
 print()
 print()
 print('*' * 50)
 print('Extension 1')
 print('*' * 50)
 
-gramatica_ext1 = cargar_gramatica('entrega/pruebas/ext1_input.txt')
+gramatica_ext1 = cargar_gramatica(DATA_DIR / 'ext1_input.txt')
 print(gramatica_ext1)
 
 for g in gramatica_ext1:
@@ -50,14 +54,14 @@ for g in gramatica_ext1:
 
 
 
-# Ext2
+# Extension 2: probabilistic CKY
 print()
 print()
 print('*' * 50)
 print('Extension 2')
 print('*' * 50)
 
-gramatica_ext2 = cargar_gramatica2('entrega/pruebas/ext2_input.txt')
+gramatica_ext2 = cargar_gramatica2(DATA_DIR / 'ext2_input.txt')
 
 for g in gramatica_ext2:
     print()
