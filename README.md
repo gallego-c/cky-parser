@@ -168,6 +168,5 @@ The notebooks remain unchanged as historical development files, including their 
 
 ## Project Context & Attribution
 
-Created for Advanced Programming and Algorithms coursework. The development notebooks by Claudia and Vero are retained under their original filenames.
-
-No license file is currently included, and no license has been inferred from the reference repository.
+Created for Advanced Programming and Algorithms coursework.
+No license file is currently included.
